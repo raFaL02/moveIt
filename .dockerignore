@@ -1,0 +1,16 @@
+node_modules
+
+*.log
+*.tmp
+.DS_Store
+Thumbs.db
+
+.git
+.gitignore
+
+.env
+.vscode/
+.idea/
+
+tests/
+docs/
