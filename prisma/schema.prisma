@@ -7,13 +7,13 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model Ride {
+model Driver {
   id          String @id @default(uuid())
   name        String
   description String
   car         String
   rating      Float
   review      String
-  pricePerKm  Int
+  pricePerKm  Float
   minKm       Int
 }
