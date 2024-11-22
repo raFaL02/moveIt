@@ -1,4 +1,3 @@
-version: '3.8'
 services:
 
   app:
@@ -8,21 +7,20 @@ services:
     ports:
       - "80:80"
     environment:
-      DATABASE_URL: "postgresql://postgres:postgres@db:5432/mydatabase"
+      DATABASE_URL: "postgresql://postgres:password@db:5432/mydatabase"
     depends_on:
-      - db
-    networks:
-      - app-network
+      - postgres
 
   postgres:
-    image: postgres:10.3
-    restart: always
+    image: postgres:latest
+    container_name: moveit
     environment:
-      - POSTGRES_USER=admin
-      - POSTGRES_PASSWORD=admin
-    volumes:
-      - postgres:/var/lib/postgresql/data
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: password
     ports:
-      - '5432:5432'
+      - '5433:5432'
+    volumes:
+      - ./.postgres-data:/var/lib/postgresql/data
+
 volumes:
-  postgres:
+  .postgres-data:
