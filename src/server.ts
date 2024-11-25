@@ -1,17 +1,4 @@
-import express from "express";
-import { Router, Request, Response } from "express";
-
-const app = express();
-
-const route = Router();
-
-app.use(express.json());
-
-route.get('/', (req: Request, res: Response) => {
-    res.json({message: "Sucess!"});
-});
-
-app.use(route);
+import app from "./app";
 
 const PORT = 8080;
 
