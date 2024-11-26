@@ -7,6 +7,15 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+model User {
+  id       String @id @default(uuid())
+  name     String
+  email    String @unique
+  password String
+
+  rides Ride[]
+}
+
 model Driver {
   id          String @id @default(uuid())
   name        String
@@ -17,17 +26,19 @@ model Driver {
   pricePerKm  Float
   minKm       Int
 
-  rides        Ride[]
+  rides Ride[]
 }
 
 model Ride {
-  id          String      @id @default(uuid())
+  id          String   @id @default(uuid())
   driverId    String
+  userId      String
   origin      String
   destination String
   distance    Float
   price       Float
   createdAt   DateTime @default(now())
 
-  driver      Driver   @relation(fields: [driverId], references: [id])
+  driver Driver @relation(fields: [driverId], references: [id])
+  user   User   @relation(fields: [userId], references: [id])
 }
