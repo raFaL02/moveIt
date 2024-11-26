@@ -8,21 +8,21 @@ class RideController {
     async estimateRide(req: Request, res: Response): Promise<Response> {
 
         try {
-            const { origin, destination, driverId } = req.body;
+            const {userId, origin, destination } = req.body;
+
+            if (!userId || userId === "") {
+                return res.status(400).json({error: "O Id do usuário é obrigatório!"});
+            }
 
             if (!origin || !destination) {
                 return res.status(400).json({error: "Origem e destino são obrigatórios!"});
             }
 
-            if (!driverId) {
-                return res.status(400).json({error: "Id do motorista é obrigatório!"})
-            } 
-
             if (destination == origin) {
                 return res.status(400).json({error: "Origem e destino não podem ser iguais!"})
             }
 
-            const result = await this.rideService.calculateRideEstimate(origin, destination, driverId);
+            const result = await this.rideService.calculateRideEstimate(userId, origin, destination);
             return res.status(200).json(result);
 
         } catch(error) {
