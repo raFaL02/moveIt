@@ -14,15 +14,15 @@ class UserRepository {
         return user;
     }
 
-    async findUserById(userId: string): Promise<{ id: string } | null> {
-        console.log("Buscando usuário com ID:", userId);
+    async findUserById(customer_id: string): Promise<{ id: string } | null> {
+        console.log("Buscando usuário com ID:", customer_id);
         
-        if (!userId) {
+        if (!customer_id) {
             return null;
         }
 
         const user = await prisma.user.findUnique({
-            where: { id: userId },
+            where: { id: customer_id },
             select: { id: true },
         });
 

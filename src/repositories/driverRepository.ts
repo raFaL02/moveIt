@@ -1,7 +1,7 @@
 import { prisma } from "../config/prisma"
 
 class DriverRepository {
-    async findDriverById(driverId: string) {
+    async findDriverById(driverId: number) {
         return prisma.driver.findUnique({
             where: {id: driverId},
             select: {
@@ -21,7 +21,7 @@ class DriverRepository {
         const drivers = await prisma.driver.findMany({
             where: {
                 minKm: {
-                    gte: minDistance
+                    lte: minDistance
                 }
             },
             select: {
