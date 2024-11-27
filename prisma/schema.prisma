@@ -36,6 +36,7 @@ model Ride {
   origin      String
   destination String
   distance    Float
+  duration    String
   price       Float
   createdAt   DateTime @default(now())
 
