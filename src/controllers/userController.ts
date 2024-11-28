@@ -16,12 +16,12 @@ class UserController {
         try {
             const user = await this.userRepository.createUser(name, email, password);
 
-            const customer_id = user.id;
+            const userId = user.id;
 
             return res.status(201).json({
                 success: true,
                 message: "Usuário criado com sucesso!",
-                data: { customer_id }
+                data: { userId }
             });
         } catch (error) {
             return res.status(500).json({ error: "Erro ao criar o usuário!" });

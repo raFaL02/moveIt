@@ -2,7 +2,7 @@ import { prisma } from "../config/prisma";
 
 class RideRepository {
     async createRide(data: {
-        customer_id: string;
+        userId: string;
         driverId: number;
         origin: string;
         destination: string;
@@ -12,7 +12,7 @@ class RideRepository {
     }) {
         return prisma.ride.create({
             data: {
-                userId: data.customer_id,
+                userId: data.userId,
                 driverId: data.driverId,
                 origin: data.origin,
                 destination: data.destination,
@@ -23,11 +23,11 @@ class RideRepository {
         });
     }
 
-    async findRidesByCustomer(customer_id: string, driver_id?: number) {
+    async findRidesByCustomer(userId: string, driver_id?: number) {
         
         const rides = await prisma.ride.findMany({
             where: {
-                userId: customer_id,
+                userId: userId,
                 ...(driver_id && { driverId: driver_id })
             },
             include: {

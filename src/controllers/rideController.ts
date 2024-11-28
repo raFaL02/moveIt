@@ -8,9 +8,9 @@ class RideController {
     async estimateRide(req: Request, res: Response): Promise<Response> {
 
         try {
-            const {customer_id, origin, destination } = req.body;
+            const {userId, origin, destination } = req.body;
 
-            if (!customer_id || customer_id === "") {
+            if (!userId || userId === "") {
                 return res.status(400).json({error: "O Id do usuário é obrigatório!"});
             }
 
@@ -22,7 +22,7 @@ class RideController {
                 return res.status(400).json({error: "Origem e destino não podem ser iguais!"})
             }
 
-            const result = await this.rideService.calculateRideEstimate(customer_id, origin, destination);
+            const result = await this.rideService.calculateRideEstimate(userId, origin, destination);
             return res.status(200).json(result);
 
         } catch(error) {
@@ -34,14 +34,14 @@ class RideController {
 
     async confirmRide(req: Request, res: Response): Promise<Response> {
         try {
-            const { customer_id, origin, destination, distance, duration, driver, value } = req.body;
+            const { userId, origin, destination, distance, duration, driver, value } = req.body;
 
-            if (!customer_id || !origin || !destination || !driver || value == null) {
+            if (!userId || !origin || !destination || !driver || value == null) {
                 return res.status(400).json({ error: "Todos os campos são obrigatórios!" });
             }
 
             const result = await this.rideService.confirmRide({
-                customer_id,
+                userId,
                 origin,
                 destination,
                 distance,
@@ -60,11 +60,11 @@ class RideController {
     async getRide(req: Request, res: Response) {
 
         try {
-            const { customer_id } = req.params;
+            const { userId } = req.params;
             const { driverId } = req.query;
 
-            if(!customer_id) {
-                return res.status(400).json({error: "O campo customer_id é obrigatório"});
+            if(!userId) {
+                return res.status(400).json({error: "O campo userId é obrigatório"});
             }
 
             if(!driverId) {
@@ -74,10 +74,10 @@ class RideController {
                 });
             }
 
-            const rides = await this.rideService.getRidesByCustomer(customer_id, Number(driverId));
+            const rides = await this.rideService.getRidesByCustomer(userId, Number(driverId));
 
             return res.status(200).json({
-                customer_id,
+                userId,
                 rides
             });
         } catch (error) {
